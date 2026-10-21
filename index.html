@@ -1,0 +1,241 @@
+[21.10.2026 15:30] ♏️Vitaly: <!-- Top Announcement Bar -->
+<div class="bg-brand-dark border-b border-white/10 text-xs py-2 px-4 text-center text-brand-gray flex justify-between items-center">
+    <span id="topBarLoc">📍 Maracay, Estado Aragua, Venezuela</span>
+    <span class="hidden md:inline text-brand-gold font-medium" id="topBarPromo">Envío gratis en compras mayores a $100</span>
+    <div class="flex items-center space-x-3">
+        <span class="text-white/60">WhatsApp: +58 412-3776184</span>
+        <!-- Language Selector -->
+        <button onclick="toggleLanguage()" class="ml-2 px-2 py-0.5 border border-brand-gold/40 text-brand-gold text-[10px] rounded hover:bg-brand-gold hover:text-black transition-all">
+            <span id="langBtnText">EN</span>
+        </button>
+    </div>
+</div>
+
+<!-- Main Navigation Bar -->
+<header class="sticky top-0 z-40 bg-brand-black/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Left: Sidebar Toggle Menu Button -->
+        <button onclick="openSidebar()" class="flex items-center space-x-2 text-white hover:text-brand-gold transition-colors focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <span class="text-xs uppercase tracking-widest font-semibold hidden sm:inline" id="navMenuLabel">Menú</span>
+        </button>
+
+        <!-- Center: Brand Logo -->
+        <div class="text-center">
+            <a href="#" onclick="filterCategory('all')" class="inline-block">
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-[0.25em] font-serif-title uppercase text-white hover:text-brand-gold transition-colors">
+                    NIGGA <span class="text-brand-gold font-light">OUTFIT</span>
+                </h1>
+                <p class="text-[9px] tracking-[0.4em] text-brand-gray uppercase -mt-1">Luxury Collection</p>
+            </a>
+        </div>
+
+        <!-- Right: Search & Cart Icons -->
+        <div class="flex items-center space-x-5">
+            <button onclick="openSidebar(); focusSearch()" class="text-white hover:text-brand-gold transition-colors p-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </button>
+            <button onclick="openCart()" class="relative text-white hover:text-brand-gold transition-colors p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                <span id="cartCount" class="absolute -top-1 -right-1 bg-brand-gold text-black font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Side Category & Search Drawer (Left) -->
+<div id="sidebarOverlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none smooth-transition"></div>
+<aside id="sidebar" class="fixed top-0 left-0 h-full w-80 sm:w-96 bg-brand-dark border-r border-white/10 z-50 transform -translate-x-full smooth-transition p-6 overflow-y-auto flex flex-col justify-between">
+    <div>
+        <!-- Sidebar Header -->
+        <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+            <h2 class="text-lg font-serif-title tracking-wider text-brand-gold uppercase" id="sidebarTitle">Explorar Colección</h2>
+            <button onclick="closeSidebar()" class="text-brand-gray hover:text-white p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+[21.10.2026 15:30] ♏️Vitaly: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Search Bar Inside Sidebar -->
+        <div class="relative mb-8">
+            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar prendas, gafas..." class="w-full bg-brand-card border border-white/10 rounded-none px-4 py-3 text-sm text-white placeholder-brand-gray focus:outline-none focus:border-brand-gold">
+            <svg class="w-4 h-4 text-brand-gray absolute right-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </div>
+
+        <!-- Category Navigation Links -->
+        <nav class="space-y-4">
+            <button onclick="filterCategory('all')" class="w-full text-left py-2 px-3 rounded hover:bg-white/5 text-sm tracking-wider uppercase flex justify-between items-center group">
+                <span class="group-hover:text-brand-gold transition-colors" id="catAll">Todos los Productos</span>
+                <span class="text-xs text-brand-gray">→</span>
+            </button>
+            <button onclick="filterCategory('men')" class="w-full text-left py-2 px-3 rounded hover:bg-white/5 text-sm tracking-wider uppercase flex justify-between items-center group">
+                <span class="group-hover:text-brand-gold transition-colors" id="catMen">Ropa Masculina</span>
+                <span class="text-xs text-brand-gray">→</span>
+            </button>
+            <button onclick="filterCategory('women')" class="w-full text-left py-2 px-3 rounded hover:bg-white/5 text-sm tracking-wider uppercase flex justify-between items-center group">
+                <span class="group-hover:text-brand-gold transition-colors" id="catWomen">Ropa Femenina</span>
+                <span class="text-xs text-brand-gray">→</span>
+            </button>
+            <button onclick="filterCategory('accessories')" class="w-full text-left py-2 px-3 rounded hover:bg-white/5 text-sm tracking-wider uppercase flex justify-between items-center group">
+                <span class="group-hover:text-brand-gold transition-colors" id="catAcc">Accesorios & Gafas</span>
+                <span class="text-xs text-brand-gray">→</span>
+            </button>
+            <button onclick="filterCategory('cosmetics')" class="w-full text-left py-2 px-3 rounded hover:bg-white/5 text-sm tracking-wider uppercase flex justify-between items-center group">
+                <span class="group-hover:text-brand-gold transition-colors" id="catCosmetics">Cosmética & Cuidado</span>
+                <span class="text-xs text-brand-gray">→</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Sidebar Footer Store Info -->
+    <div class="border-t border-white/10 pt-6 text-xs text-brand-gray space-y-2">
+        <p class="text-white font-medium">NIGGA OUTFIT Store</p>
+        <p>📍 Maracay, Estado Aragua, Venezuela</p>
+        <p>📞 +58 412-3776184</p>
+    </div>
+</aside>
+
+<!-- Shopping Cart Drawer (Right) -->
+<div id="cartOverlay" onclick="closeCart()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none smooth-transition"></div>
+<aside id="cartDrawer" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-brand-dark border-l border-white/10 z-50 transform translate-x-full smooth-transition p-6 flex flex-col justify-between">
+    <div>
+        <!-- Cart Header -->
+        <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+            <h2 class="text-lg font-serif-title tracking-wider text-brand-gold uppercase" id="cartTitle">Tu Carrito de Compras</h2>
+            <button onclick="closeCart()" class="text-brand-gray hover:text-white p-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.
+[21.10.2026 15:30] ♏️Vitaly: 5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Cart Items List Container -->
+        <div id="cartItemsContainer" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+            <!-- Items populated dynamically via JS -->
+        </div>
+    </div>
+
+    <!-- Cart Total & WhatsApp Checkout -->
+    <div class="border-t border-white/10 pt-6 space-y-4">
+        <div class="flex justify-between items-center text-sm font-semibold">
+            <span class="uppercase tracking-wider text-brand-gray" id="cartSubtotalLabel">Subtotal:</span>
+            <span id="cartSubtotal" class="text-xl text-brand-gold font-serif-title">$0.00 USD</span>
+        </div>
+        <button onclick="checkoutWhatsApp()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold py-3 uppercase tracking-widest text-xs transition-colors flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12.031 0c-6.627 0-12 5.373-12 12 0 2.159.57 4.26 1.654 6.107l-1.685 6.153 6.295-1.651c1.78.97 3.784 1.481 5.736 1.481 6.627 0 12-5.373 12-12s-5.373-12-12-12zm6.602 17.026c-.279.785-1.385 1.439-2.222 1.621-.611.131-1.408.236-4.088-.871-3.428-1.416-5.637-4.897-5.808-5.125-.171-.228-1.391-1.854-1.391-3.536 0-1.682.883-2.51 1.198-2.853.315-.343.688-.429.917-.429.229 0 .458.002.658.012.211.01.493-.08.771.587.279.667.954 2.327 1.038 2.498.084.171.139.371.026.598-.113.228-.17.371-.341.571-.171.2-.358.446-.512.599-.171.171-.35.358-.15.701.2.343.89 1.468 1.908 2.376 1.309 1.168 2.413 1.531 2.756 1.702.343.171.543.143.743-.086.2-.228.857-.999 1.085-1.342.228-.343.457-.285.771-.171.314.114 1.999.942 2.342 1.113.343.171.571.257.656.401.085.143.085.828-.194 1.613z"/>
+            </svg>
+            <span id="btnCheckoutLabel">Comprar por WhatsApp</span>
+        </button>
+    </div>
+</aside>
+
+<!-- Main Content Layout -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Hero Section -->
+    <section class="relative bg-brand-dark border border-white/10 rounded-sm p-8 sm:p-16 mb-16 overflow-hidden">
+        <div class="relative z-10 max-w-2xl">
+            <span class="text-brand-gold uppercase tracking-[0.3em] text-xs font-semibold mb-3 block" id="heroSubtitle">Nueva Colección 2026</span>
+            <h2 class="text-4xl sm:text-6xl font-serif-title font-bold text-white mb-6 leading-tight" id="heroTitle">Elegancia Urbana & Estilo Exclusivo</h2>
+            <p class="text-brand-gray text-sm sm:text-base leading-relaxed mb-8" id="heroDesc">Descubre nuestra línea seleccionada de ropa masculina, femenina, gafas de sol y cosmética premium en Maracay, Venezuela.</p>
+            <button onclick="filterCategory('all')" class="bg-brand-gold hover:bg-brand-goldHover text-black font-bold px-8 py-4 uppercase text-xs tracking-widest transition-colors inline-block" id="heroBtn">Ver Catálogo</button>
+        </div>
+        <!-- Background Image Glow Effect -->
+        <div class="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-brand-gold/10 to-transparent pointer-events-none"></div>
+    </section>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 border-b border-white/10 pb-6">
+        <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2 text-xs uppercase tracking-wider border border-white/20 hover:border-brand-gold transition-colors" data-cat="all" id="tabAll">Todos</button>
+        <button onclick="filterCategory('men')" class="cat-btn px-5 py-2 text-xs uppercase tracking-wider border border-white/20 hover:border-brand-gold transition-colors" data-cat="men" id="tabMen">Hombre</button>
+        <button onclick="filterCategory('women')" class="cat-btn px-5 py-2 text-xs uppercase tracking-wider border border-white/20 hover:border-brand-gold transition-colors" data-cat="women" id="tabWomen">Mujer</button>
+[21.10.2026 15:30] ♏️Vitaly: <button onclick="filterCategory('accessories')" class="cat-btn px-5 py-2 text-xs uppercase tracking-wider border border-white/20 hover:border-brand-gold transition-colors" data-cat="accessories" id="tabAcc">Accesorios & Gafas</button>
+        <button onclick="filterCategory('cosmetics')" class="cat-btn px-5 py-2 text-xs uppercase tracking-wider border border-white/20 hover:border-brand-gold transition-colors" data-cat="cosmetics" id="tabCosmetics">Cosmética</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <!-- Dynamic Products Injected via JavaScript -->
+    </div>
+
+</main>
+
+<!-- Product Lightbox Modal -->
+<div id="productModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none smooth-transition">
+    <div class="bg-brand-dark border border-white/10 max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-sm p-6 sm:p-8 relative grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Close Modal Button -->
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-brand-gray hover:text-white p-2 z-10">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Modal Image Gallery -->
+        <div>
+            <div class="aspect-square bg-brand-black border border-white/10 mb-4 overflow-hidden rounded-sm">
+                <img id="modalMainImg" src="" alt="" class="w-full h-full object-cover">
+            </div>
+            <!-- Thumbnail Selector Switcher -->
+            <div id="modalThumbnails" class="flex space-x-3 overflow-x-auto pb-2">
+                <!-- Thumbnails Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Modal Product Details -->
+        <div class="flex flex-col justify-between">
+            <div>
+                <span id="modalCategory" class="text-brand-gold text-[10px] tracking-[0.2em] uppercase font-semibold block mb-2">Categoría</span>
+                <h2 id="modalTitle" class="text-2xl sm:text-3xl font-serif-title font-bold text-white mb-3">Nombre del Producto</h2>
+                <p id="modalPrice" class="text-2xl text-brand-gold font-serif-title mb-4">$20.00 USD</p>
+                <p id="modalDesc" class="text-brand-gray text-xs sm:text-sm leading-relaxed mb-6">Descripción detallada del producto en español e inglés.</p>
+
+                <!-- Size Selector (If applicable) -->
+                <div id="sizeSelectorContainer" class="mb-6">
+                    <label class="block text-xs uppercase tracking-wider text-white mb-2" id="lblSelectSize">Seleccionar Talla:</label>
+                    <div class="flex space-x-2">
+                        <button onclick="selectSize(this)" class="size-btn px-3 py-1.5 border border-white/20 text-xs hover:border-brand-gold active">S</button>
+                        <button onclick="selectSize(this)" class="size-btn px-3 py-1.5 border border-white/20 text-xs hover:border-brand-gold">M</button>
+                        <button onclick="selectSize(this)" class="size-btn px-3 py-1.5 border border-white/20 text-xs hover:border-brand-gold">L</button>
+                        <button onclick="selectSize(this)" class="size-btn px-3 py-1.5 border border-white/20 text-xs hover:border-brand-gold">XL</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="modalAddToCartBtn" onclick="addToCartFromModal()" class="w-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold py-4 uppercase tracking-widest text-xs transition-colors">
+                Añadir al Carrito
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-brand-dark border-t border-white/10 mt-20 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+[21.10.2026 15:30] ♏️Vitaly: <h3 class="text-lg font-serif-title text-white uppercase tracking-wider mb-3">NIGGA OUTFIT</h3>
+            <p class="text-xs text-brand-gray leading-relaxed">Tienda exclusiva de moda urbana, accesorios, gafas y cosmética. Diseñado para quienes buscan elegancia y calidad superior.</p>
+        </div>
+        <div>
+            <h4 class="text-xs uppercase tracking-widest text-brand-gold font-semibold mb-3" id="ftLocationHeader">Ubicación & Contacto</h4>
+            <p class="text-xs text-brand-gray mb-1">📍 Maracay, Estado Aragua, Venezuela</p>
+            <p class="text-xs text-brand-gray mb-1">📞 Teléfono: +58 412-3776184</p>
+            <p class="text-xs text-brand-gray">✉️ Ventas directas vía WhatsApp</p>
+        </div>
+        <div>
+            <h4 class="text-xs uppercase tracking-widest text-brand-gold font-semibold mb-3" id="ftLangHeader">Idioma / Language</h4>
+            <div class="flex space-x-4">
+                <button onclick="setLang('es')" class="text-xs text-white hover:text-brand-gold">Español (ES)</button>
+                <span class="text-brand-gray">|</span>
+                <button onclick="setLang('en')" class
